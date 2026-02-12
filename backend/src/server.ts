@@ -13,52 +13,86 @@ app.use(cors({
 app.use(express.json());
 
 // Routes
+
 app.get('/api/profile', async (req: Request, res: Response) => {
+  try {
     const db = getDb();
     const profile = await db.get('SELECT * FROM profile LIMIT 1');
-    res.json(profile);
+    res.json(profile || {});
+  } catch (error) {
+    console.error("Profile route error:", error);
+    res.status(500).json({ error: "Failed to fetch profile" });
+  }
 });
 
 app.get('/api/education', async (req: Request, res: Response) => {
+  try {
     const db = getDb();
     const education = await db.all('SELECT * FROM education');
-    res.json(education);
+    res.json(education || []);
+  } catch (error) {
+    console.error("Education route error:", error);
+    res.status(500).json({ error: "Failed to fetch education" });
+  }
 });
 
 app.get('/api/experience', async (req: Request, res: Response) => {
+  try {
     const db = getDb();
     const experience = await db.all('SELECT * FROM experience');
-    // Parse details JSON if needed or just return text
-    // Assuming details is a stored string, maybe JSON stringified array of bullets
+
     const formattedExperience = experience.map((exp: any) => ({
-        ...exp,
-        details: JSON.parse(exp.details)
+      ...exp,
+      details: exp.details ? JSON.parse(exp.details) : []
     }));
+
     res.json(formattedExperience);
+  } catch (error) {
+    console.error("Experience route error:", error);
+    res.status(500).json({ error: "Failed to fetch experience" });
+  }
 });
 
 app.get('/api/projects', async (req: Request, res: Response) => {
+  try {
     const db = getDb();
     const projects = await db.all('SELECT * FROM projects');
-    // database has description as text, no parsing needed
-    res.json(projects);
+    res.json(projects || []);
+  } catch (error) {
+    console.error("Projects route error:", error);
+    res.status(500).json({ error: "Failed to fetch projects" });
+  }
 });
 
 app.get('/api/skills', async (req: Request, res: Response) => {
+  try {
     const db = getDb();
     const skills = await db.all('SELECT * FROM skills');
-    res.json(skills);
+    res.json(skills || []);
+  } catch (error) {
+    console.error("Skills route error:", error);
+    res.status(500).json({ error: "Failed to fetch skills" });
+  }
 });
 
-initializeDatabase().then(async () => {
+
+const startServer = async () => {
+  try {
+    await initializeDatabase();
     console.log("Database initialized");
 
-    // Run seed automatically
     await seed();
     console.log("Database seeded");
 
     app.listen(PORT, () => {
-        console.log(`Server running on port ${PORT}`);
+      console.log(`Server running on port ${PORT}`);
     });
-});
+
+  } catch (error) {
+    console.error("Failed to start server:", error);
+    process.exit(1);
+  }
+};
+
+startServer();
 
