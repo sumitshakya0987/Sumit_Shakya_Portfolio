@@ -8,7 +8,7 @@ const app = express();
 const PORT = process.env.PORT || 5000;
 
 app.use(cors({
-  origin: "https://sumit-shakya-portfolio-uhc7.vercel.app"
+  origin: "*"
 }));
 app.use(express.json());
 
