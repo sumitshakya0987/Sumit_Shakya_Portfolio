@@ -7,6 +7,18 @@ import { motion } from 'framer-motion';
 const Skills = () => {
     const [skills, setSkills] = useState<Skill[]>([]);
 
+    const getIcon = (category: string) => {
+        switch (category) {
+            case 'Languages': return '💻';
+            case 'Databases': return '🗄️';
+            case 'Web Technologies': return '🌐';
+            case 'Core Concepts': return '🧠';
+            case 'Tools & Cloud': return '☁️';
+            case 'AI Tools': return '🤖';
+            default: return '⚡';
+        }
+    };
+
     useEffect(() => {
         getSkills().then(setSkills).catch(console.error);
     }, []);
@@ -21,11 +33,14 @@ const Skills = () => {
                         whileInView={{ opacity: 1, y: 0 }}
                         viewport={{ once: true }}
                         transition={{ duration: 0.5, delay: index * 0.1 }}
-                        whileHover={{ scale: 1.05 }}
-                        className="bg-gray-800/40 backdrop-blur-md p-6 rounded-xl border border-gray-700/50 hover:border-secondary/50 transition-all duration-300 shadow-lg hover:shadow-secondary/10 group"
+                        whileHover={{ scale: 1.05, rotate: 1 }}
+                        className="bg-gray-800/40 backdrop-blur-md p-8 rounded-2xl border border-gray-700/50 hover:border-secondary/50 transition-all duration-300 shadow-xl hover:shadow-secondary/20 group flex flex-col items-center text-center"
                     >
-                        <h3 className="text-xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-secondary to-accent mb-4 group-hover:scale-105 transition-transform origin-left">{skill.category}</h3>
-                        <div className="flex flex-wrap gap-2">
+                        <div className="text-6xl mb-6 filter drop-shadow-lg group-hover:scale-110 transition-transform duration-300">
+                            {getIcon(skill.category)}
+                        </div>
+                        <h3 className="text-2xl font-bold text-white mb-6 group-hover:text-secondary transition-colors">{skill.category}</h3>
+                        <div className="flex flex-wrap justify-center gap-2">
                             {skill.items.split(',').map((item, idx) => (
                                 <span
                                     key={idx}
