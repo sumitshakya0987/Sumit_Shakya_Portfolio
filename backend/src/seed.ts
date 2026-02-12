@@ -138,6 +138,11 @@ const seed = async () => {
         ['Tools & Cloud', 'Git, AWS Cloud Basics, VS Code, Postman']
     );
 
+    await db.run(
+        `INSERT INTO skills (category, items) VALUES (?, ?)`,
+        ['AI Tools', 'Gemini, Copilot, ChatGPT, Antigravity']
+    );
+
     console.log('Database seeded successfully');
 };
 
