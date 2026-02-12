@@ -1,7 +1,7 @@
 import axios from 'axios';
 import type { Profile, Education, Experience, Project, Skill } from '../types';
 
-const API_URL = 'https://sumit-shakya-portfolio.onrender.com';
+const API_URL = 'https://sumit-shakya-portfolio.onrender.com/api';
 
 export const getProfile = async (): Promise<Profile> => {
     const response = await axios.get(`${API_URL}/profile`);
