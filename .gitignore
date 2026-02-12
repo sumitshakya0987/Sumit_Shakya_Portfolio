@@ -1,0 +1,18 @@
+# dependencies
+node_modules/
+
+# production
+dist/
+
+# environment
+.env
+
+# database
+*.db
+
+# logs
+logs
+*.log
+
+# OS files
+.DS_Store
