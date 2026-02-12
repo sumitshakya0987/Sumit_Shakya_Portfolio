@@ -1,9 +1,8 @@
 import { useState, useEffect } from 'react';
 import Section from '../components/Section';
-import Card from '../components/Card';
 import { getProjects } from '../services/api';
 import type { Project } from '../types';
-import { FaExternalLinkAlt, FaGithub, FaFolder } from 'react-icons/fa';
+import { FaExternalLinkAlt, FaFolder } from 'react-icons/fa';
 import { motion } from 'framer-motion';
 
 const Projects = () => {

@@ -3,7 +3,7 @@ import { motion } from 'framer-motion';
 import { getProfile } from '../services/api';
 import type { Profile } from '../types';
 import { Link } from 'react-scroll';
-import { FaReact, FaNodeJs, FaDatabase, FaCode, FaLaptopCode } from 'react-icons/fa';
+import { FaReact, FaNodeJs, FaDatabase, FaCode } from 'react-icons/fa';
 import { SiTypescript, SiMongodb, SiPostgresql, SiTailwindcss } from 'react-icons/si';
 
 const Hero = () => {
