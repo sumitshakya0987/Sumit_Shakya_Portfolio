@@ -141,6 +141,6 @@ const seed = async () => {
     console.log('Database seeded successfully');
 };
 
-seed().then(() => console.log('Done')).catch(err => console.error(err));
+
 
 export default seed;
