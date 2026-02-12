@@ -142,3 +142,5 @@ const seed = async () => {
 };
 
 seed().then(() => console.log('Done')).catch(err => console.error(err));
+
+export default seed;

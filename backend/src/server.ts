@@ -1,6 +1,8 @@
 import express, { Request, Response } from 'express';
+import seed from './seed';
 import cors from 'cors';
 import { initializeDatabase, getDb } from './database';
+
 
 const app = express();
 const PORT = process.env.PORT || 5000;
@@ -48,8 +50,15 @@ app.get('/api/skills', async (req: Request, res: Response) => {
     res.json(skills);
 });
 
-initializeDatabase().then(() => {
+initializeDatabase().then(async () => {
+    console.log("Database initialized");
+
+    // Run seed automatically
+    await seed();
+    console.log("Database seeded");
+
     app.listen(PORT, () => {
         console.log(`Server running on port ${PORT}`);
     });
 });
+
