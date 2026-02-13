@@ -1,11 +1,13 @@
 import { useState, useEffect } from 'react';
 import Section from '../components/Section';
+import Loading from '../components/Loading';
 import { getSkills } from '../services/api';
 import type { Skill } from '../types';
 import { motion } from 'framer-motion';
 
 const Skills = () => {
     const [skills, setSkills] = useState<Skill[]>([]);
+    const [loading, setLoading] = useState(true);
 
     const getIcon = (category: string) => {
         switch (category) {
@@ -20,8 +22,19 @@ const Skills = () => {
     };
 
     useEffect(() => {
-        getSkills().then(setSkills).catch(console.error);
+        getSkills()
+            .then(setSkills)
+            .catch(console.error)
+            .finally(() => setLoading(false));
     }, []);
+
+    if (loading) {
+        return (
+            <Section id="skills" title="Technical Skills">
+                <Loading />
+            </Section>
+        );
+    }
 
     return (
         <Section id="skills" title="Technical Skills">

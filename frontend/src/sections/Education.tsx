@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import Section from '../components/Section';
+import Loading from '../components/Loading';
 import { getEducation } from '../services/api';
 import type { Education } from '../types';
 import { FaGraduationCap } from 'react-icons/fa';
@@ -7,10 +8,22 @@ import { motion } from 'framer-motion';
 
 const EducationSection = () => {
     const [education, setEducation] = useState<Education[]>([]);
+    const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-        getEducation().then(setEducation).catch(console.error);
+        getEducation()
+            .then(setEducation)
+            .catch(console.error)
+            .finally(() => setLoading(false));
     }, []);
+
+    if (loading) {
+        return (
+            <Section id="education" title="Education">
+                <Loading />
+            </Section>
+        );
+    }
 
     return (
         <Section id="education" title="Education">

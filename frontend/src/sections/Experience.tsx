@@ -1,15 +1,28 @@
 import { useState, useEffect } from 'react';
 import Section from '../components/Section';
 import Card from '../components/Card';
+import Loading from '../components/Loading';
 import { getExperience } from '../services/api';
 import type { Experience } from '../types';
 
 const ExperienceSection = () => {
     const [experiences, setExperiences] = useState<Experience[]>([]);
+    const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-        getExperience().then(setExperiences).catch(console.error);
+        getExperience()
+            .then(setExperiences)
+            .catch(console.error)
+            .finally(() => setLoading(false));
     }, []);
+
+    if (loading) {
+        return (
+            <Section id="experience" title="Work Experience">
+                <Loading />
+            </Section>
+        );
+    }
 
     return (
         <Section id="experience" title="Work Experience">

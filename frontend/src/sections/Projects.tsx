@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import Section from '../components/Section';
+import Loading from '../components/Loading';
 import { getProjects } from '../services/api';
 import type { Project } from '../types';
 import { FaExternalLinkAlt, FaFolder } from 'react-icons/fa';
@@ -7,10 +8,22 @@ import { motion } from 'framer-motion';
 
 const Projects = () => {
     const [projects, setProjects] = useState<Project[]>([]);
+    const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-        getProjects().then(setProjects).catch(console.error);
+        getProjects()
+            .then(setProjects)
+            .catch(console.error)
+            .finally(() => setLoading(false));
     }, []);
+
+    if (loading) {
+        return (
+            <Section id="projects" title="Key Projects">
+                <Loading />
+            </Section>
+        );
+    }
 
     return (
         <Section id="projects" title="Key Projects">
